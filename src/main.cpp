@@ -24,4 +24,9 @@ bool MyApp::OnInit()
 
 MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size) : wxFrame(nullptr, wxID_ANY, title, pos, size)
 {
+    auto button = new wxButton(this, wxID_ANY, "Click me!");
+
+    auto sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(button, 0, wxCENTER | wxALL, 100);
+    SetSizerAndFit(sizer);
 }

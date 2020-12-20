@@ -21,7 +21,8 @@
     "unordered_map": "cpp",
     "unordered_set": "cpp",
     "vector": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "ostream": "cpp"
 },
   "cmake.configureOnOpen": false,
   "editor.formatOnSave":true,
