@@ -15,7 +15,7 @@ public:
 
 private:
     void OnClick(wxCommandEvent &);
-
+    void OnSize(wxSizeEvent &);
     wxDECLARE_EVENT_TABLE();
 };
 
@@ -29,6 +29,7 @@ enum ButtonId
 
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
 EVT_BUTTON(wxID_ANY, MyFrame::OnClick)
+EVT_SIZE(MyFrame::OnSize)
 wxEND_EVENT_TABLE()
 
 ; // clang-format on
@@ -40,6 +41,7 @@ public:
 
 private:
     void OnClick(wxCommandEvent &);
+    void OnSize(wxSizeEvent &);
     wxDECLARE_EVENT_TABLE();
 };
 
@@ -54,10 +56,17 @@ void MyPanel::OnClick(wxCommandEvent &e)
     e.Skip();
 }
 
+void MyPanel::OnSize(wxSizeEvent &e)
+{
+    std::cout << "PANEL OnSize. H = " << e.GetSize().GetHeight() << ", id = " << e.GetId() << std::endl;
+    e.Skip();
+}
+
 // clang-format off
 
 wxBEGIN_EVENT_TABLE(MyPanel, wxPanel)
 EVT_BUTTON(wxID_ANY, MyPanel::OnClick)
+EVT_SIZE(MyPanel::OnSize)
 wxEND_EVENT_TABLE()
 
 ; // clang-format on
@@ -89,5 +98,11 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size) 
 void MyFrame::OnClick(wxCommandEvent &e)
 {
     std::cout << "Hey, button clicked. It's id = " << e.GetId() << std::endl;
+    e.Skip();
+}
+
+void MyFrame::OnSize(wxSizeEvent &e)
+{
+    std::cout << "FRAME size event. Height = " << e.GetSize().GetHeight() << ", Id = " << e.GetId() << std::endl;
     e.Skip();
 }
