@@ -15,7 +15,6 @@ public:
 
 private:
     void OnClick(wxCommandEvent &);
-    void OnOtherClick(wxCommandEvent &);
 
     wxDECLARE_EVENT_TABLE();
 };
@@ -30,7 +29,35 @@ enum ButtonId
 
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
 EVT_BUTTON(wxID_ANY, MyFrame::OnClick)
-EVT_BUTTON(other_button_id, MyFrame::OnOtherClick)
+wxEND_EVENT_TABLE()
+
+; // clang-format on
+
+class MyPanel : public wxPanel
+{
+public:
+    MyPanel(wxWindow *parent);
+
+private:
+    void OnClick(wxCommandEvent &);
+    wxDECLARE_EVENT_TABLE();
+};
+
+MyPanel::MyPanel(wxWindow *parent) : wxPanel(parent)
+{
+    this->SetBackgroundColour(wxColor(200, 100, 100));
+}
+
+void MyPanel::OnClick(wxCommandEvent &e)
+{
+    std::cout << "PANEL OnClick, id = " << e.GetId() << std::endl;
+    e.Skip();
+}
+
+// clang-format off
+
+wxBEGIN_EVENT_TABLE(MyPanel, wxPanel)
+EVT_BUTTON(wxID_ANY, MyPanel::OnClick)
 wxEND_EVENT_TABLE()
 
 ; // clang-format on
@@ -44,11 +71,17 @@ bool MyApp::OnInit()
 
 MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size) : wxFrame(nullptr, wxID_ANY, title, pos, size)
 {
-    auto button = new wxButton(this, first_button_id, "Click me!");
+    auto panel = new MyPanel(this);
+
+    auto button = new wxButton(panel, first_button_id, "Click me!");
+    auto panelSizer = new wxBoxSizer(wxHORIZONTAL);
+    panelSizer->Add(button, 0, wxCENTER | wxALL, 100);
+    panel->SetSizerAndFit(panelSizer);
+
     auto otherButton = new wxButton(this, other_button_id, "Or me!");
 
     auto sizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->Add(button, 0, wxCENTER | wxALL, 100);
+    sizer->Add(panel, 0, wxEXPAND);
     sizer->Add(otherButton, 0, wxCENTER | wxALL, 100);
     SetSizerAndFit(sizer);
 }
@@ -57,9 +90,4 @@ void MyFrame::OnClick(wxCommandEvent &e)
 {
     std::cout << "Hey, button clicked. It's id = " << e.GetId() << std::endl;
     e.Skip();
-}
-
-void MyFrame::OnOtherClick(wxCommandEvent &e)
-{
-    std::cout << "Other button clicked. It's id = " << e.GetId() << std::endl;
 }
