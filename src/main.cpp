@@ -12,7 +12,20 @@ class MyFrame : public wxFrame
 {
 public:
     MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+
+private:
+    void OnClick(wxCommandEvent &);
+
+    wxDECLARE_EVENT_TABLE();
 };
+
+// clang-format off
+
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
+EVT_BUTTON(wxID_ANY, MyFrame::OnClick)
+wxEND_EVENT_TABLE()
+
+; // clang-format on
 
 bool MyApp::OnInit()
 {
@@ -28,4 +41,9 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size) 
     auto sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(button, 0, wxCENTER | wxALL, 100);
     SetSizerAndFit(sizer);
+}
+
+void MyFrame::OnClick(wxCommandEvent &e)
+{
+    std::cout << "Hey, button clicked. It's id = " << e.GetId() << std::endl;
 }
