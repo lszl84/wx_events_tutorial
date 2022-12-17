@@ -1,3 +1,7 @@
 # wx_events_tutorial
 
-Basic events tutorial for wxWidgets.
+Basic events tutorial for wxWidgets ([video tutorial](https://www.youtube.com/watch?v=5v00F8hEV7E)).
+
+---
+Check out the blog for more! [www.justdevtutorials.com](https://www.justdevtutorials.com)
+---
